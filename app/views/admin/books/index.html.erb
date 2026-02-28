@@ -1,0 +1,79 @@
+<% content_for :title, "admin — bookbook" %>
+
+<div class="admin-page">
+  <h1>books</h1>
+
+  <% if notice %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+
+  <%# Forms live outside the table — inputs reference them via the form= attribute %>
+  <% @books.each do |book| %>
+    <form id="book_<%= book.id %>"
+          action="<%= admin_book_path(book) %>"
+          method="post">
+      <input type="hidden" name="_method" value="patch">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    </form>
+  <% end %>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>title</th>
+        <th>author</th>
+        <th>ol_work_id</th>
+        <th>elo</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td>
+            <% if book.cover_key %>
+              <img src="<%= ENV.fetch('MINIO_PUBLIC_URL', 'http://localhost:9000') %>/book-covers/<%= book.cover_key %>" alt="" class="admin-cover">
+            <% end %>
+          </td>
+          <td>
+            <input form="book_<%= book.id %>" type="text" name="book[display_title]"
+                   value="<%= book[:display_title] %>" placeholder="<%= book.title %>">
+            <span class="original"><%= book.title %></span>
+          </td>
+          <td>
+            <input form="book_<%= book.id %>" type="text" name="book[display_author]"
+                   value="<%= book[:display_author] %>" placeholder="<%= book.author %>">
+            <span class="original"><%= book.author %></span>
+          </td>
+          <td class="muted"><%= book.ol_work_id %></td>
+          <td><%= book.elo_score %></td>
+          <td>
+            <button form="book_<%= book.id %>" type="submit" class="save-btn">save</button>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  document.querySelectorAll("form[id^='book_']").forEach(form => {
+    const inputs = [...document.querySelectorAll(`input[form="${form.id}"][type="text"]`)];
+    const btn = document.querySelector(`button[form="${form.id}"]`);
+
+    inputs.forEach(input => {
+      input.addEventListener("input", () => {
+        const dirty = inputs.some(i => i.value !== i.defaultValue);
+        btn.classList.toggle("dirty", dirty);
+      });
+    });
+
+    form.addEventListener("turbo:submit-end", e => {
+      if (e.detail.success) {
+        inputs.forEach(i => i.defaultValue = i.value);
+        btn.classList.remove("dirty");
+      }
+    });
+  });
+</script>

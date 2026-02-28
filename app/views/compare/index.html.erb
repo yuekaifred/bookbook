@@ -1,0 +1,57 @@
+<div class="compare">
+  <p class="compare-prompt t-primary-italic">Which one do you prefer?</p>
+
+  <%= form_with url: vote_path do |f| %>
+    <%= f.hidden_field :winner_id, value: @book_a.id %>
+    <%= f.hidden_field :loser_id,  value: @book_b.id %>
+    <button type="submit" class="choice"
+            data-elo="<%= @book_a.elo_score %>"
+            data-opponent-elo="<%= @book_b.elo_score %>">
+      <div class="choice-info">
+        <span class="book-title t-primary"><%= @book_a.display_title %></span>
+        <span class="book-author t-secondary-italic"><%= @book_a.display_author %></span>
+      </div>
+      <div class="choice-cover">
+        <% if @book_a.cover_key %>
+          <img src="<%= ENV.fetch('MINIO_PUBLIC_URL', 'http://localhost:9000') %>/book-covers/<%= @book_a.cover_key %>"
+               alt="<%= @book_a.display_title %>">
+        <% else %>
+          <div class="no-cover">no cover</div>
+        <% end %>
+        <div class="elo-overlay">
+          <span class="elo-score t-primary"></span>
+          <span class="elo-delta"></span>
+        </div>
+      </div>
+    </button>
+  <% end %>
+
+  <div class="compare-or t-secondary-italic">or</div>
+
+  <%= form_with url: vote_path do |f| %>
+    <%= f.hidden_field :winner_id, value: @book_b.id %>
+    <%= f.hidden_field :loser_id,  value: @book_a.id %>
+    <button type="submit" class="choice"
+            data-elo="<%= @book_b.elo_score %>"
+            data-opponent-elo="<%= @book_a.elo_score %>">
+      <div class="choice-info">
+        <span class="book-title t-primary"><%= @book_b.display_title %></span>
+        <span class="book-author t-secondary-italic"><%= @book_b.display_author %></span>
+      </div>
+      <div class="choice-cover">
+        <% if @book_b.cover_key %>
+          <img src="<%= ENV.fetch('MINIO_PUBLIC_URL', 'http://localhost:9000') %>/book-covers/<%= @book_b.cover_key %>"
+               alt="<%= @book_b.display_title %>">
+        <% else %>
+          <div class="no-cover">no cover</div>
+        <% end %>
+        <div class="elo-overlay">
+          <span class="elo-score t-primary"></span>
+          <span class="elo-delta"></span>
+        </div>
+      </div>
+    </button>
+  <% end %>
+</div>
+
+<p class="compare-description t-secondary">These classic books are icons in their own unique right and it's stupid trying to reduce them to binary comparisons. Let's try to do that anyways! Pick your favourite book between the two given to you. Check out the leaderboard to see what the crowd generally prefers. You might encounter inaccurate titles and ugly looking cover images, but I will try my best to fix them wherever. Info and images about these books are taken from the <a href="https://openlibrary.org/">Open Library</a> which does the thankless job of keeping information about all books free and open. These books are based off of <a href="https://www.oclc.org/en/worldcat/library100.html">The Library 100</a> from OCLC.</p>

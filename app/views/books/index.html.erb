@@ -1,0 +1,15 @@
+<h1>bookbook</h1>
+
+<div class="book-grid">
+  <% @books.each do |book| %>
+    <div class="book-card">
+      <% if book.cover_key %>
+        <img src="<%= ENV.fetch('MINIO_PUBLIC_URL', 'http://localhost:9000') %>/book-covers/<%= book.cover_key %>" alt="<%= book.title %>">
+      <% else %>
+        <div class="no-cover">no cover</div>
+      <% end %>
+      <span class="book-title"><%= book.display_title %></span>
+      <span class="book-author"><%= book.display_author %></span>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "bookbook" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <nav>
+      <a href="/" class="nav-logo t-primary-italic">Bookbook</a>
+      <div class="nav-links">
+        <a href="/" class="t-secondary-italic <%= 'active' if current_page?(root_path) %>">Compare</a>
+        <a href="/leaderboard" class="t-secondary-italic <%= 'active' if current_page?('/leaderboard') %>">Leaderboard</a>
+      </div>
+    </nav>
+    <main>
+      <%= yield %>
+    </main>
+  </body>
+</html>

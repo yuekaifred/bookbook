@@ -1,0 +1,24 @@
+<% content_for :title, "leaderboard — bookbook" %>
+
+<div class="leaderboard">
+  <p class="lb-intro t-secondary">This is what the crowd generally prefers. Elo is a measure of how well the books performed during "matches".</p>
+
+  <% @books.each_with_index do |book, i| %>
+    <div class="lb-row">
+      <span class="lb-rank t-primary"><%= i + 1 %></span>
+      <div class="lb-cover">
+        <% if book.cover_key %>
+          <img src="<%= ENV.fetch('MINIO_PUBLIC_URL', 'http://localhost:9000') %>/book-covers/<%= book.cover_key %>"
+               alt="<%= book.display_title %>">
+        <% else %>
+          <div class="no-cover"></div>
+        <% end %>
+      </div>
+      <div class="lb-info">
+        <span class="book-title t-primary"><%= book.display_title %></span>
+        <span class="book-author t-secondary-italic"><%= book.display_author %></span>
+        <span class="lb-elo t-secondary-italic"><%= book.elo_score %> elo</span>
+      </div>
+    </div>
+  <% end %>
+</div>

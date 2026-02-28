@@ -1,0 +1,21 @@
+<% content_for :title, "edit — bookbook" %>
+
+<div class="admin-page">
+  <h1><%= @book.title %></h1>
+
+  <%= form_with model: [:admin, @book] do |f| %>
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+
+    <div class="field">
+      <%= f.label :author %>
+      <%= f.text_field :author %>
+    </div>
+
+    <%= f.submit "save" %>
+  <% end %>
+
+  <p><%= link_to "← back", admin_books_path %></p>
+</div>
