@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   get  "/leaderboard", to: "leaderboard#index"
 
   namespace :admin do
-    resources :books, only: [:index, :update]
+    resources :books, only: [ :index, :update ]
   end
 end
