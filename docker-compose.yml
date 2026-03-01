@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: bookbook
       POSTGRES_PASSWORD: bookbook
-      POSTGRES_DB: bookbook_development
+      POSTGRES_DB: bookbook_production
     ports:
       - "5432:5432"
     volumes:
@@ -22,21 +22,17 @@ services:
       - "9000:9000"
       - "9001:9001"
     volumes:
+      - minio_data:/data
 
   web:
     build: ./project
     restart: unless-stopped
     ports:
-      - "3000:3000"
-    environment:
-      RAILS_ENV: production
-      DATABASE_URL: postgres://bookbook:bookbook@db:5432/bookbook_production
-      MINIO_PUBLIC_URL: https://minio.bookbook.fredyang.com      RAILS_MASTER_KEY: <your key>
-      ADMIN_USERNAME: <you>
-      ADMIN_PASSWORD: <secret>
+      - "3067:80"
+    env_file: .env.production
     depends_on:
       - db
-      - minio     - minio_data:/data
+      - minio
 
 volumes:
   postgres_data:
