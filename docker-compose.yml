@@ -22,7 +22,21 @@ services:
       - "9000:9000"
       - "9001:9001"
     volumes:
-      - minio_data:/data
+
+  web:
+    build: ./project
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://bookbook:bookbook@db:5432/bookbook_production
+      MINIO_PUBLIC_URL: https://minio.bookbook.fredyang.com      RAILS_MASTER_KEY: <your key>
+      ADMIN_USERNAME: <you>
+      ADMIN_PASSWORD: <secret>
+    depends_on:
+      - db
+      - minio     - minio_data:/data
 
 volumes:
   postgres_data:

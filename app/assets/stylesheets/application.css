@@ -89,9 +89,16 @@ main {
 .compare form:first-of-type { justify-content: flex-end; }
 .compare form:last-of-type  { justify-content: flex-start; }
 
+.compare-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: stretch;
+  align-items: center;
+}
+
 .compare-or {
   font-size: 1.1rem;
-  flex-shrink: 0;
 }
 
 .choice {
@@ -125,14 +132,14 @@ main {
 }
 
 .choice-cover img {
-  height: 68vh;
+  height: 72vh;
   width: auto;
   display: block;
   box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }
 
 .choice-cover .no-cover {
-  height: 68vh;
+  height: 72vh;
   width: auto;
   aspect-ratio: 2/3;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -189,9 +196,27 @@ main {
 }
 
 .compare-description {
-  font-size: 0.85rem;
-  padding: 4rem 6rem 2rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  padding: 2rem 4rem;
 }
+
+@media (min-width: 1667px) {
+  .compare-description {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 14rem;
+    padding: 0;
+  }
+}
+
+.compare-skip {
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.compare-skip:hover { text-decoration: underline; }
 
 /* leaderboard */
 
@@ -225,19 +250,19 @@ main {
 
 .lb-cover {
   flex-shrink: 0;
+  width: 200px;
 }
 
 .lb-cover img {
-  height: 110px;
-  width: auto;
+  width: 100%;
+  height: auto;
   display: block;
   box-shadow: 0 2px 12px rgba(0,0,0,0.12);
 }
 
 .lb-cover .no-cover {
-  height: 110px;
+  width: 100%;
   aspect-ratio: 2/3;
-  width: auto;
 }
 
 .lb-info {

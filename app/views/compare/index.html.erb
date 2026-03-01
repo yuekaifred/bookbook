@@ -26,7 +26,10 @@
     </button>
   <% end %>
 
-  <div class="compare-or t-secondary-italic">or</div>
+  <div class="compare-center">
+    <div class="compare-or t-secondary-italic">or</div>
+    <%= link_to "Skip", root_path, class: "compare-skip t-secondary" %>
+  </div>
 
   <%= form_with url: vote_path do |f| %>
     <%= f.hidden_field :winner_id, value: @book_b.id %>

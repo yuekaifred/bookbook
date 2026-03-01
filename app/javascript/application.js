@@ -24,6 +24,15 @@ document.addEventListener("turbo:load", function () {
     requestAnimationFrame(tick);
   }
 
+  const skipLink = document.querySelector(".compare-skip");
+  if (skipLink) {
+    skipLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      document.querySelector(".compare").classList.add("fade-out");
+      setTimeout(() => (window.location = this.href), 250);
+    });
+  }
+
   let voted = false;
 
   document.querySelectorAll(".choice").forEach((btn) => {
