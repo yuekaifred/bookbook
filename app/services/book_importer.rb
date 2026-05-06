@@ -9,11 +9,15 @@ class BookImporter
     return existing if existing
 
     work      = fetch_json("https://openlibrary.org/works/#{id}.json")
-    title     = work["title"] or raise "no title found for #{id}"
+    title     = work["title"]
+    return nil if title.blank?
     author    = fetch_author(work)
     cover_key = fetch_and_upload_cover(id, work)
 
     Book.create!(title:, author:, ol_work_id: id, cover_key:)
+  rescue => e
+    Rails.logger.warn("BookImporter: skipping #{id} — #{e.message}")
+    nil
   end
 
   private_class_method def self.fetch_json(url)

@@ -81,4 +81,5 @@ Rails.application.configure do
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts += ENV.fetch("RAILS_HOSTS", "bookbook.fredyang.com").split(",").map(&:strip)
+  config.hosts << "localhost"
 end

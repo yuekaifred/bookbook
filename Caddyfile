@@ -1,0 +1,8 @@
+bookbook.fredyang.com {
+    reverse_proxy web:3000
+}
+
+localhost {
+    tls internal
+    reverse_proxy web:3000
+}

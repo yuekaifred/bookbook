@@ -1,5 +1,6 @@
 class Admin::BooksController < ApplicationController
-  http_basic_authenticate_with name: ENV.fetch("ADMIN_USERNAME", "admin"), password: ENV.fetch("ADMIN_PASSWORD", "admin")
+  http_basic_authenticate_with name: Rails.application.credentials.admin_username!,
+                               password: Rails.application.credentials.admin_password!
 
   def index
     @books = Book.order(:title)
